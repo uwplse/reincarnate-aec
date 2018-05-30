@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- third party libs -->
+  <script src='lib/jquery-3.2.1.min.js'></script>
+  <script src='lib/d3.min.js'></script>
+  <script src='lib/underscore-min.js'></script>
+  <script src='lib/three.js'></script>
+  <script src='lib/FileSaver.js'></script>
+  <script src='lib/codemirror/lib/codemirror.js'></script>
+  <script src='lib/codemirror/addon/edit/matchbrackets.js'></script>
+  <script src="lib/codemirror/keymap/emacs.js"></script>
+  <script src="lib/codemirror/keymap/vim.js"></script>
+  <script src='lib/codemirror/mode/mllike/mllike.js'></script>
+  <link rel='stylesheet' type='text/css' href='lib/codemirror/lib/codemirror.css' />
+
+  <!-- reincarnate libs -->
+  <script src='viz-1D.js'></script>
+  <script src='viz-2D.js'></script>
+  <script src='viz-3D.js'></script>
+  <script src='viz-anyD.js'></script>
+  <script src='zarith-stubs.js'></script>
+  <script src='JSLib.js'></script>
+  <script src='main.js'></script>
+  <link rel='stylesheet' type='text/css' href='style.css' />
+</head>
+<body>
+  <ul id='nav'>
+    <li id='nav-lc' onclick='view("lc")'>
+      &lambda; CAD</li>
+    <li id='nav-cad' onclick='view("cad")'>
+      CAD</li>
+    <li id='nav-mesh' onclick='view("mesh")'>
+      Mesh</li>
+    <li id='nav-slicer' onclick='view("slicer")'>
+      Slicer</li>
+    <li id='nav-tp' onclick='view("tp")'>
+      ToolPath</li>
+    <li id='nav-gcode' onclick='view("gcode")'>
+      GCode</li>
+    <li id='nav-log' onclick='view("log")'>
+      Settings</li>
+  </ul>
+  <div id='content'>
+
+    <div id='lc'>
+      <div class='controls'>
+        <button onclick='compile("lc")'>
+          Compile</button>
+
+        <div class='flr'>
+          <button onclick='upload_aux("lc")'>
+            Upload</button>
+          <input id='lc-upload' class='invis' type='file'
+            onchange='upload("lc")' />
+          <button onclick='download("lc")'>
+            Download</button>
+          <input id='lc-download' />
+        </div>
+      </div>
+      <div class='main'>
+        <textarea id='lc-code' class='code'></textarea>
+      </div>
+    </div>
+
+    <div id='cad'>
+      <div class='controls'>
+        <button onclick='compile("cad")'>
+          Compile</button>
+
+        <div class='flr'>
+          <button onclick='upload_aux("cad")'>
+            Upload</button>
+          <input id='cad-upload' class='invis' type='file'
+            onchange='upload("cad")' />
+          <button onclick='download("cad")'>
+            Download</button>
+          <input id='cad-download' />
+        </div>
+      </div>
+      <div class='main'>
+        <textarea id='cad-code' class='code'></textarea>
+      </div>
+    </div>
+
+    <div id='mesh'>
+      <div class='controls'>
+        <button onclick='viz()'>
+          Viz</button>
+        <button onclick='synth("mesh")'>
+          Synth</button>
+        <button onclick='compile("mesh")'>
+          Compile</button>
+
+        <div class='flr'>
+          <button onclick='upload_aux("mesh")'>
+            Upload</button>
+          <input id='mesh-upload' class='invis' type='file'
+            onchange='upload("mesh")' />
+          <button onclick='download("mesh")'>
+            Download</button>
+          <input id='mesh-download' />
+        </div>
+      </div>
+      <div class='main'>
+        <div id='visualizer'>
+          <div id="3d-blocker" style="display: none;">
+            <div id="instructions">
+              <span style="font-size:40px">Click to enable viewer</span>
+	      <br />
+              (W, A, S, D, Q, Z = Move, MOUSE = Look around)
+	    </div>
+          </div>
+        </div>
+        <textarea id='mesh-code' class='code'></textarea>
+      </div>
+    </div>
+
+    <div id='slicer'>
+      <div class='controls'>
+        <button onclick='compile("slicer")'>
+          Compile</button>
+
+        <div class='flr'>
+          <button onclick='upload_aux("slicer")'>
+            Upload</button>
+          <input id='slicer-upload' class='invis' type='file'
+            onchange='upload("slicer")' />
+          <button onclick='download("slicer")'>
+            Download</button>
+          <input id='slicer-download' />
+        </div>
+      </div>
+      <div class='main'>
+        <textarea id='slicer-code' class='code'></textarea>
+      </div>
+    </div>
+
+    <div id='tp'>
+      <div class='controls'>
+        <button onclick='compile("tp")'>
+          Compile</button>
+
+        <div class='flr'>
+          <button onclick='upload_aux("tp")'>
+            Upload</button>
+          <input id='tp-upload' class='invis' type='file'
+            onchange='upload("tp")' />
+          <button onclick='download("tp")'>
+            Download</button>
+          <input id='tp-download' />
+        </div>
+      </div>
+      <div class='main'>
+        <textarea id='tp-code' class='code'></textarea>
+      </div>
+    </div>
+
+    <div id='gcode'>
+      <div class='controls'>
+        <button class='dummy'>
+          &nbsp;
+          </button>
+
+        <div class='flr'>
+          <button onclick='upload_aux("gcode")'>
+            Upload</button>
+          <input id='gcode-upload' class='invis' type='file'
+            onchange='upload("gcode")' />
+          <button onclick='download("gcode")'>
+            Download</button>
+          <input id='gcode-download' />
+        </div>
+      </div>
+      <div class='main'>
+        <textarea id='gcode-code' class='code'></textarea>
+      </div>
+    </div>
+
+    <div id='log'>
+      <div class='controls'>
+        <button class='dummy'>
+          &nbsp;
+          </button>
+
+        <div class='flr'>
+          <button onclick='download("log")'>
+            Download Log</button>
+          <input id='log-download' />
+        </div>
+      </div>
+      <div class='settings'>
+        <div>
+          Edit Mode :
+          <select id='edit-mode' onchange='edit_mode()'>
+            <option value='default'>Default</option>
+            <option value='emacs'>Emacs</option>
+            <option value='vim'>Vim</option>
+          </select>
+        </div>
+        <div>
+          Random Seed :
+          <input id='rand-seed'></input>
+          <button onclick='updt_rand_seed()'>Set</button>
+        </div>
+        <div>
+          Display Digits :
+          <input id='disp-prec'></input>
+          <button onclick='updt_disp_prec()'>Set</button>
+        </div>
+        <div>
+          Log Tags :
+          <input id='tag-filter'></input>
+          <button onclick='updt_tag_filter()'>Set</button>
+        </div>
+        <div>
+          <button onclick='reset_log()'>Reset Log</button>
+        </div>
+      </div>
+      <div class='main'>
+        <textarea id='log-code' class='code'></textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    init();
+  </script>
+</body>
+</html>

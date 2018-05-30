@@ -1,0 +1,8 @@
+*~
+*.cmi
+*.cmo
+*.log
+*.out
+*.pyc
+*.swp
+.DS_STORE

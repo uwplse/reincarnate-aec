@@ -1,0 +1,17 @@
+true: color(auto), package(str), package(gmp), package(js_of_ocaml), package(zarith), package(hashcons)
+
+true: use_menhir, explain, infer, unused-tokens, unused-precedence-levels
+"parsers": include
+
+"parsers/Mesh1Parser.mly"     : external_tokens(ParserLib)
+"parsers/Mesh2Parser.mly"     : external_tokens(ParserLib)
+"parsers/Mesh3Parser.mly"     : external_tokens(ParserLib)
+"parsers/STLParser.mly"       : external_tokens(ParserLib)
+"parsers/CAD1Parser.mly"      : external_tokens(ParserLib)
+"parsers/CAD2Parser.mly"      : external_tokens(ParserLib)
+"parsers/CAD3Parser.mly"      : external_tokens(ParserLib)
+"parsers/LambdaCADParser.mly" : external_tokens(ParserLib)
+
+"parsers/SynthBench1Parser.mly" : external_tokens(ParserLib)
+"parsers/SynthBench2Parser.mly" : external_tokens(ParserLib)
+"parsers/SynthBench3Parser.mly" : external_tokens(ParserLib)
