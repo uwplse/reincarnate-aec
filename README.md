@@ -57,7 +57,7 @@ files will be saved in the `aec/compiled-meshes/mesh3` directory. The `.stl`
 files will be saved in the `aec/compiled-meshes/stl` directory.
 
 * To run the compiler, run the following from the `src` directory:
-  `./scripts/compile.sh`.
+  `./scripts/compile.sh`. This should take less than a minute to finish.
 
 * If you want to view the rendered meshes, we recommend the following
   two approaches:
@@ -79,7 +79,8 @@ showed in the paper (`Section 6`). We also provide some other smaller
 examples that are faster than the ones in the paper.
 
 * We recommend first running the script `./scripts/basic-synth.sh` to run the
-  synthesis tool on the 5 programs we showed for the compiler.
+  synthesis tool on the 5 programs we showed for the compiler. This should
+  finish in ~ 7 minutes.
 
 * To run the case studies in the paper (`Section 6`), run
   `./scripts/paper-synth.sh`. We recommend letting this script run for over a
