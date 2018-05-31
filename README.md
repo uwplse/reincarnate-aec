@@ -100,7 +100,7 @@ examples that are faster than the ones in the paper.
   synthesizing one of these is:
 
   ```
-   ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt synthed-cads/example-name.cad3 --glue os-mesh --no-invariants --fuel x
+   ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt synthed-cads/cad3/example-name.cad3 --glue os-mesh --no-invariants --fuel x
   ```
 
   You can further experiment to generate the corresponding `scad` files if you
