@@ -165,7 +165,7 @@ let __prims3 = ref
   ; ("hexagon", "Hexagon")
   ]
 
-let __fuel = ref 4
+let __fuel = ref 5
 
 let __timeout    = ref 0
 

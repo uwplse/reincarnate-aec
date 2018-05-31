@@ -23,7 +23,7 @@ echo "Candle holder"
 printf "${PASS}\n\n"
 
 echo "ICFP-I"
-./Main.native --src aec/paper-synth/icfp_i.mesh3 --tgt aec/synthed-cads/cad3/icfp_i.cad3 --no-invariants --glue os-mesh --fuel 5
+./Main.native --src aec/paper-synth/icfp_i.mesh3 --tgt aec/synthed-cads/cad3/icfp_i.cad3 --no-invariants --glue os-mesh
 ./Main.native --src aec/synthed-cads/cad3/icfp_i.cad3 --tgt aec/synthed-cads/scad/icfp_i.scad
 printf "${PASS}\n\n"
 
@@ -33,12 +33,12 @@ echo "ICFP-C"
 printf "${PASS}\n\n"
 
 echo "ICFP-F"
-./Main.native --src aec/paper-synth/icfp_f.mesh3 --tgt aec/synthed-cads/cad3/icfp_f.cad3 --no-invariants --glue os-meshi --fuel 5
+./Main.native --src aec/paper-synth/icfp_f.mesh3 --tgt aec/synthed-cads/cad3/icfp_f.cad3 --no-invariants --glue os-mesh
 ./Main.native --src aec/synthed-cads/cad3/icfp_f.cad3 --tgt aec/synthed-cads/scad/icfp_f.scad
 printf "${PASS}\n\n"
 
 echo "ICFP-P"
-./Main.native --src aec/paper-synth/icfp_p.mesh3 --tgt aec/synthed-cads/cad3/icfp_p.cad3 --no-invariants --glue os-mesh --fuel 5
+./Main.native --src aec/paper-synth/icfp_p.mesh3 --tgt aec/synthed-cads/cad3/icfp_p.cad3 --no-invariants --glue os-mesh
 ./Main.native --src aec/synthed-cads/cad3/icfp_p.cad3 --tgt aec/synthed-cads/scad/icfp_p.scad
 printf "${PASS}\n\n"
 
