@@ -1194,7 +1194,6 @@ module RawSynth3
     if disjoint m then
       (*(print_endline "disjoint mesh";*)
       C3.Mesh m
-      (*)*)
     else
       let (cm, t, (rx, ry, rz), s) = canon m in
       let potentials =
