@@ -1192,8 +1192,9 @@ module RawSynth3
   let bound_prim prims m =
     let disjoint m = List.length (M3.cycles m) > 1 in
     if disjoint m then
-      (print_endline "disjoint mesh";
-      C3.Mesh m)
+      (*(print_endline "disjoint mesh";*)
+      C3.Mesh m
+      (*)*)
     else
       let (cm, t, (rx, ry, rz), s) = canon m in
       let potentials =
