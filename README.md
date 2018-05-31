@@ -5,8 +5,8 @@
 In our paper, we made the following contributions (`Section 1`, last
 paragraph):
 
-1. A purely functional programming language model for CAD along with
-   denotational semantics for 3D CAD and mesh.
+1. A purely functional programming language model for 3D CAD along with
+   denotational semantics for both CAD and triangular mesh.
 
 2. A meaning preserving compilation algorithm from 3D CAD to mesh along with a
    proof sketch for compiler correctness.
