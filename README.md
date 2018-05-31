@@ -2,8 +2,34 @@
 
 ## Goals of the artifact
 
-This artifact will demonstrate a working compiler (`Section 4`) and reverse
-compiler (`Section 5`) for 3D CAD and Mesh.
+In our paper, we made the following contributions (`Section 1`, last
+paragraph):
+
+1. A purely functional programming language model for CAD along with
+   denotational semantics for CAD and mesh.
+
+2. A meaning preserving compilation algorithm from CAD to mesh along with a
+   proof sketch for compiler correctness.
+
+3. A synthesis algorithm that can reverse engineer CAD programs from meshes.
+
+In support of these contributions, this artifact will demonstrate:
+
+* A working compiler (`Section 4`) from the core CAD language (`Figure 8` in
+  the paper) to mesh.
+
+* A synthesis tool or reverse compiler (`Section 5`) from 3D mesh to CAD.
+
+This document contains the following parts:
+
+* Getting started.
+
+* How to run the compiler and synthesis tool.
+
+* How to use the tools for additional experiments.
+
+* How to set up ReIncarnate on a different machine (this is also how we set up
+  the VM).
 
 ## Getting started
 
@@ -13,8 +39,7 @@ compiler (`Section 5`) for 3D CAD and Mesh.
 
 * The terminal is open at startup. The project repository is already cloned.
   Navigate to the `reincarnate` directory.  All the required packages are
-  already installed. A step-by-step guide for getting started is also
-  provided in the `README.md` for future reproducibility.
+  already installed.
 
 * Type `cd src` from the `reincarnate` directory and then type `make`. This
   will build all the tools.
@@ -114,9 +139,7 @@ demonstrating our synthesis tool, we leverage the fully functorial design of
 our tools and plug in the OpenSCAD compiler.
 
 
-## CAD compilation and synthesis in Ocaml
-
-### Setup
+### Setup instructions 
 
 1. Install system dependencies. On macOS with [Homebrew](https://brew.sh/):
 ```
