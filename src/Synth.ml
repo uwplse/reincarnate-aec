@@ -1301,10 +1301,6 @@ module RawSynth3
        |> C3.simplify
 
   let best4 c cs =
-    let f = "cads.txt" in
-    List.iter
-      (fun x -> Util.append_file f (C3.to_string x ^ "\n-----------\n\n"))
-      cs;
     let vols =
       List.map (fun x ->
         (x, M3.vol (M3.diff (C3.compile x) (C3.compile c)))) cs

@@ -1,0 +1,10 @@
+Diff {
+  Scale(2, 2, 2) {
+    Unit
+  }
+  Trans(0.5, 0, 0.5) {
+    Scale(2, 2, 2) {
+      Unit
+    }
+  }
+}
