@@ -101,7 +101,7 @@ examples that are faster than the ones in the paper.
   synthesizing one of these is:
 
   ```
-   ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt synthed-cads/cad3/example-name.cad3 --glue os-mesh --no-invariants --fuel x
+   ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt aec/synthed-cads/cad3/example-name.cad3 --glue os-mesh --no-invariants --fuel x
   ```
 
   `fuel` is a parameter used by the synthesis algorithm shown in `Figure 18`
