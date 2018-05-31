@@ -1,3 +1,22 @@
+#!/usr/bin/env bash
+
+# exit on error
+set -e
+
+# determine physical directory of this script
+src="${BASH_SOURCE[0]}"
+while [ -L "$src" ]; do
+  dir="$(cd -P "$(dirname "$src")" && pwd)"
+  src="$(readlink "$src")"
+  [[ $src != /* ]] && src="$dir/$src"
+done
+MYDIR="$(cd -P "$(dirname "$src")" && pwd)"
+
+# include reincarnate bash library
+source "$MYDIR/include.sh"
+
+printf "SYNTHESIS TESTS FROM THE PAPER\n"
+
 ./Main.native --src aec/paper-synth/candle.mesh3 --tgt aec/synthed-cads/cad3/candle.cad3 --no-invariants --glue os-mesh
 ./Main.native --src aec/synthed-cads/cad3/candle.cad3 --tgt aec/synthed-cads/scad/candle.scad
 
@@ -21,3 +40,4 @@
 ./Main.native --src aec/synthed-cads/cad3/hexholder.cad3 --tgt aec/synthed-cads/scad/hexholder.scad
 
 
+printf "ALL DONE\n"
