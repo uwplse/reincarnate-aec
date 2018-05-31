@@ -48,7 +48,7 @@ This document contains the following parts:
 
 ### Compiler: cad3 -> mesh3
 
-We provide 5 LambdaCAD programs and a script that compiles them using our
+We provide 5 CAD programs and a script that compiles them using our
 CAD compiler to generate a 3D mesh. We compile the CAD programs to our mesh
 format (.mesh3 files) and also the industry standard format, STL (.stl
 files).  The `.mesh3` files will be saved in the `aec/mesh3` directory. The
@@ -153,10 +153,10 @@ our tools and plug in the OpenSCAD compiler.
 On Linux without root, using [Linuxbrew](http://linuxbrew.sh/):
 ```
   $ brew install autoconf parallel git git-lfs graphviz
-  $ # ... depending on the Linux distro, install [OpenSCAD](http://www.openscad.org/downloads.html)
-  $ # ... build gnuplot from source
   $ brew install ocaml opam
 ```
+You also need to install [OpenSCAD](http://www.openscad.org/downloads.html)
+and build gnuplot from source.
 
 On Linux with root and `apt`:
 ```
