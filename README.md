@@ -103,17 +103,16 @@ examples that are faster than the ones in the paper.
    ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt synthed-cads/cad3/example-name.cad3 --glue os-mesh --no-invariants --fuel x
   ```
 
+  `fuel` is a parameter used by the synthesis algorithm shown in `Figure 18`
+  in `Section 5.1` of the paper. It is used to ensure termination of the
+  algorithm. All these additional examples will work with `--fuel 10`.
+
   You can further experiment to generate the corresponding `scad` files if you
   are curious to see the renderings on OpenSCAD. The command for that is:
 
   ```
   ./Main.native --src aec/synthed-cads/cad3/example-name.cad3 --tgt aec/synthed-cads/scad/example-name.scad
   ```
-
-
-  `fuel` is a parameter used by the synthesis algorithm shown in `Figure 18`
-  in `Section 5.1` of the paper. It is used to ensure termination of the
-  algorithm. All these additional examples will work with `--fuel 10`.
 
 ### Details for further experimentation
 
