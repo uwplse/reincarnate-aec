@@ -697,7 +697,7 @@ module RawSynth3
     in loop c
 
   let disj_step c =
-    print_endline "disjoint step";
+    (*print_endline "disjoint step";*)
     let rec go = function
       | C3.Empty    -> C3.Empty
       | C3.Unit     -> C3.Unit
@@ -1240,7 +1240,7 @@ module RawSynth3
   let canon_prim_meshes = ref []
 
   let sub_step c =
-    print_endline "subtractive step";
+    (*print_endline "subtractive step";*)
     let rec go = function
       | C3.Empty    -> C3.Empty
       | C3.Unit     -> C3.Unit
@@ -1254,9 +1254,9 @@ module RawSynth3
           else begin
             match try_recogs !canon_prim_meshes m with
             | None ->
-                print_endline "finding bounding prim";
+                (*print_endline "finding bounding prim";*)
                 let bb = bound_prim !canon_prim_meshes m in
-                print_endline  "bounding primitive found";
+                (*print_endline  "bounding primitive found";*)
                 let d  = M3.diff (C3.compile bb) m in
                 C3.mkbinop C3.Diff bb (C3.Mesh d)
             | Some p -> p
