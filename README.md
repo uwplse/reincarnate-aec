@@ -65,7 +65,7 @@ files will be saved in the `aec/compiled-meshes/stl` directory.
   - using OpenSCAD which is already installed in this VM. Click on the
     OpenSCAD icon on the vertical panel on the left and then click on `New`.
     To view the rendering, type:
-    `import("/home/reincarnate/reincarnate/src/aec/compiled-meshes/stl/example_name.stl");`
+    `import("/home/reincarnate/reincarnate/src/aec/compiled-meshes/stl/example-name.stl");`
     Then click on the `Render` button on top and view the rendering!
 
   - using the online STL viewer: www.viewstl.com. Note that this website
