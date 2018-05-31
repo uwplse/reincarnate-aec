@@ -92,15 +92,13 @@ examples that are faster than the ones in the paper.
   The command for some `example.mesh3` is:
 
   ```
-   ./Main.native --src aec/mesh3/example.mesh3 --tgt example.cad3 --glue
-  os-mesh --no-invariants --fuel x
+   ./Main.native --src aec/mesh3/example.mesh3 --tgt example.cad3 --glue os-mesh --no-invariants --fuel x
   ```
 
   The command for some `example.stl` is:
 
   ```
-  ./Main.native --src aec/mesh3/example.stl --tgt example.cad3 --glue
-  os-mesh --no-invariants --fuel x
+  ./Main.native --src aec/mesh3/example.stl --tgt example.cad3 --glue os-mesh --no-invariants --fuel x
   ```
 
   `fuel` is a parameter used by the synthesis algorithm shown in `Figure 18`
