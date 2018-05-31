@@ -150,13 +150,13 @@ our tools and plug in the OpenSCAD compiler.
   $ brew install ocaml opam
 ```
 
-On Linux without root, using [Linuxbrew](http://linuxbrew.sh/):
+On Linux without root, you need to install [OpenSCAD](http://www.openscad.org/downloads.html)
+and build gnuplot from source. Then using [Linuxbrew](http://linuxbrew.sh/):
+
 ```
   $ brew install autoconf parallel git git-lfs graphviz
   $ brew install ocaml opam
 ```
-You also need to install [OpenSCAD](http://www.openscad.org/downloads.html)
-and build gnuplot from source.
 
 On Linux with root and `apt`:
 ```
