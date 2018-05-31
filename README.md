@@ -6,16 +6,16 @@ In our paper, we made the following contributions (`Section 1`, last
 paragraph):
 
 1. A purely functional programming language model for CAD along with
-   denotational semantics for CAD and mesh.
+   denotational semantics for 3D CAD and mesh.
 
-2. A meaning preserving compilation algorithm from CAD to mesh along with a
+2. A meaning preserving compilation algorithm from 3D CAD to mesh along with a
    proof sketch for compiler correctness.
 
-3. A synthesis algorithm that can reverse engineer CAD programs from meshes.
+3. A synthesis algorithm that can reverse engineer 3D CAD programs from meshes.
 
 In support of these contributions, this artifact will demonstrate:
 
-* A working compiler (`Section 4`) from the core CAD language (`Figure 8` in
+* A working compiler (`Section 4`) from the core 3D CAD language (`Figure 8` in
   the paper) to mesh.
 
 * A synthesis tool or reverse compiler (`Section 5`) from 3D mesh to CAD.
