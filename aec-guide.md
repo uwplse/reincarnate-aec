@@ -12,7 +12,7 @@ In support of these contributions, this artifact will demonstrate:
 
 * An early prototype of the compiler (`Section 4`) from the core 3D CAD language (`Figure 8` in the paper) to mesh. The goal is to show that our compiler is capable of generating valid triangular meshes as we described in the paper. To that end we provide 5 CAD programs which cover all the core CAD language features we described in `Figure 8` of the paper: 3D primitives, affine transformations, binary operations, and their combinations.
 
-* An early prototype of the synthesis tool or reverse compiler (`Section 5`) from 3D mesh to CAD. The goal is to show that the synthesis tool is capable of synthesizing CAD programs from meshes for the case studies we described in `Section 6` of the paper. Later in this document, we provide instructions on how to view the 3D renderings of the CAD programs our tool synthesizes. You can compare them with the figures we show in the paper, namely in `Figures 3, 20, 21` and verify that the renderings look similar.
+* An early prototype of the synthesis tool or reverse compiler (`Section 5`) from 3D mesh to CAD. The goal is to show that the synthesis tool is capable of synthesizing CAD programs from meshes for the case studies we described in `Section 6` of the paper. Later in this document, we provide instructions on how to view the 3D renderings of the CAD programs our tool synthesizes. You can compare them with the figures we show in the paper, namely in `Figures 3, 20, 21` and verify that the renderings look the same. 
 
 This document contains the following parts:
 
@@ -69,23 +69,24 @@ _Note_: Before running any scripts, feel free to check that the directories `aec
 
 * We recommend first running the script `./scripts/basic-synth.sh` to run the synthesis tool on the 5 meshes our compiler generated. This is just a sanity check. It should finish in ~ 7 minutes and a successful run indicates that it is possible to write CAD programs in our CAD language, compile them to mesh using our compiler, and then synthesize CAD programs back from the meshes.
 
-* To run the case studies in the paper (`Section 6`), run `./scripts/paper-synth.sh`. Please let this script run for 2 hours. _Note:_ for the hexholder, we run a smaller version of it from this script which has fewer holes than the one in `Figure 21` of the paper. This is because the one in the paper is very big and it sometimes takes over a day to complete. We provide the mesh for the very big one (`aec/paper-synth/bighexholder.mesh3`) in case you are interested to let it run for a day or two.
-
-* The synthesized CAD programs will be in the directory `aec/synthed-cads`. Our script will generate both `.cad3` files and `.scad` files in dedicated sub directories within `aec/synthed-cads`. The `.cad3` files correspond to the CAD programs synthesized in our CAD language. The `.scad` files correspond to equivalent CAD programs in the OpenSCAD language. We do this so that you can use the OpenSCAD GUI to view the rendered CAD programs.  Clicking on the files will open them in OpenSCAD from where you can click the `Render` button to view the rendering. 
-
-* There are some other small examples we provide for synthesis that you can try to run yourself if you are interested. The meshes for these are in the `aec/extra-synth` directory. The command you need to run for synthesizing one of these is:
+* To run the case studies in the paper (`Section 6`), run `./scripts/paper-synth.sh`. Please let this script run for two hours. _Note:_ for the hexholder, we run a smaller version of it from this script which has fewer holes than the one in `Figure 21` of the paper. This is because the one in the paper is very big and it takes about 9 hours to complete. We provide the mesh for the very big one in the directory: `aec/paper-synth/bighexholder.mesh3`. In case you are interested to let it run for 9 hours, the command you need to run is:
 
   ```
-   ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt aec/synthed-cads/cad3/example-name.cad3 --glue os-mesh --no-invariants --fuel x
+   ./Main.native --src aec/paper-synth/bighexholder.mesh3 --tgt aec/synthed-cads/cad3/bighexholder.cad3 --glue os-mesh --no-invariants --fuel x
   ```
 
-  `fuel` is a parameter used by the synthesis algorithm shown in `Figure 18` in `Section 5.1` of the paper. It is used to ensure termination of the algorithm. You can set it to `--fuel 100`. We explain the flags `--glue os-mesh` and `--no-invariants` in the next section.
+  `fuel` is a parameter used by the synthesis algorithm shown in `Figure 18` in `Section 5.1` of the paper. It is used to ensure termination of the algorithm. You can set it to `--fuel 1000`. We explain the flags `--glue os-mesh` and `--no-invariants` in the next section.
 
-  You can further experiment to generate the corresponding `scad` files if you are curious to see the renderings on OpenSCAD. The command for that is:
+  You can further experiment to generate the corresponding `scad` file. The command for that is:
 
   ```
-  ./Main.native --src aec/synthed-cads/cad3/example-name.cad3 --tgt aec/synthed-cads/scad/example-name.scad
+  ./Main.native --src aec/synthed-cads/cad3/bighexholder.cad3 --tgt aec/synthed-cads/scad/bighexholder.scad
   ```
+If you just want to look at the code our tool synthesized for this big example, we have included them in the directories: `aec/pre-run-big-hexholder/cad3/bighexholder.cad3` and `aec/pre-run-big-hexholder/scad/bighexholder.scad` (to open in OpenSCAD anc view).
+
+* All the synthesized CAD programs will be in the directory `aec/synthed-cads`. Our script will generate both `.cad3` files and `.scad` files in dedicated sub directories within `aec/synthed-cads`. The `.cad3` files correspond to the CAD programs synthesized in our CAD language. The `.scad` files correspond to equivalent CAD programs in the OpenSCAD language. We do this so that you can use the OpenSCAD GUI to view the rendered CAD programs.  Clicking on the files will open them in OpenSCAD from where you can click the `Render` button to view the rendering. 
+
+* There are some other small examples we provide for synthesis that you can try to run yourself if you are interested. The meshes for these are in the `aec/extra-synth` directory. One is a cylinder primitive, another is a cube with one hole, and the third one is a another small hexholder with 3 holes.
 
 ### Notes and remarks
 
@@ -93,7 +94,7 @@ As we have explained in `Section 4.2.2` of the paper, the design of our tool is 
 
 For the compiler experiments, we of course use the compiler that we have built.  We also check all the invariants (see `Section 3.2.1` of the paper) to ensure that the meshes our compiler produces are valid.
 
-Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated by the flag `--glue os-mesh`), and also disable our invariant (indicated by the flag `--no-invariants`) checks in order to avoid rounding errors. As we explained in Section `8.1` of the paper, rounding errors creep in very frequently in CAD compilation and as part of our future work, we have already started to work on ways to fix it (e.g. exact arithmetic). Since these numerical issues are still work in progress, for the purpose of demonstrating our synthesis tool, we leverage the fully functorial design of our tools and plug in the OpenSCAD compiler.
+Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated by the flag `--glue os-mesh`), and also disable our invariant (indicated by the flag `--no-invariants`) checks in order to avoid rounding errors. As we explained in Section `8.1` of the paper, rounding errors creep in very frequently in CAD compilation and as part of our future work, we have already started to work on ways to fix it (e.g. exact arithmetic). Since these numerical issues are still work in progress and not a contribution of this paper, for the purpose of demonstrating our synthesis tool, we leverage the fully functorial design of our tools and plug in the OpenSCAD compiler.
 
 ### Setup instructions (for setting up ReIncarnate in a different machine)
 
