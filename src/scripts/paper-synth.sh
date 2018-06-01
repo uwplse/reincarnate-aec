@@ -15,6 +15,10 @@ MYDIR="$(cd -P "$(dirname "$src")" && pwd)"
 # include reincarnate bash library
 source "$MYDIR/include.sh"
 
+# ensure output dirs exist
+mkdir -p aec/synthed-cads/cad3
+mkdir -p aec/synthed-cads/scad
+
 printf "SYNTHESIS TESTS FROM THE PAPER\n"
 
 echo "ICFP-I"
