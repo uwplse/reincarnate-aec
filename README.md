@@ -10,9 +10,9 @@ In our paper, we made the following contributions (`Section 1`, last paragraph):
 
 In support of these contributions, this artifact will demonstrate:
 
-* An early prototype of the compiler (`Section 4`) from the core 3D CAD language (`Figure 8` in the paper) to mesh. The goal is to show that our compiler is capable of generating valid triangular meshes as we described in the paper.
+* An early prototype of the compiler (`Section 4`) from the core 3D CAD language (`Figure 8` in the paper) to mesh. The goal is to show that our compiler is capable of generating valid triangular meshes as we described in the paper. To that end we provide 5 CAD programs which cover all the core CAD language features we described in `Figure 8` of the paper: 3D primitives, affine transformations, binary operations, and their combinations.
 
-* An early prototype of the synthesis tool or reverse compiler (`Section 5`) from 3D mesh to CAD. The goal is to show that the synthesis tool is capable of synthesizing CAD programs from meshes for the three case studies we described in `Section 6` of the paper.
+* An early prototype of the synthesis tool or reverse compiler (`Section 5`) from 3D mesh to CAD. The goal is to show that the synthesis tool is capable of synthesizing CAD programs from meshes for the three case studies we described in `Section 6` of the paper. Later in this document, we provide instructions on how to view the 3D renderings of the CAD programs our tool synthesizes. Feel free to compare them with the figures we show in the paper, namely in `Figures 3, 20, 21` and verify that the renderings match with the figures.
 
 This document contains the following parts:
 
@@ -22,7 +22,7 @@ This document contains the following parts:
 
 * How to run the compiler and synthesis tool.
 
-* How to use the tools for additional experiments.
+* Some notes and remarks
 
 * How to set up ReIncarnate on a different machine (this is also how we set up
   the VM).
@@ -49,21 +49,17 @@ This document contains the following parts:
 
 ### Compiler: cad3 -> mesh3
 
-We provide 5 CAD programs and a script that compiles them using our CAD compiler to generate a 3D mesh.  These CAD programs are in the directory: `aec/cads-to-compile`.  We compile the CAD programs to our mesh format (.mesh3 files) and also the industry standard format, STL (.stl files).  The `.mesh3` files will be saved in the `aec/compiled-meshes/mesh3` directory. The `.stl` files will be saved in the `aec/compiled-meshes/stl` directory.
+We provide 5 CAD programs and a script that compiles them using our CAD compiler to generate 3D meshes.  These CAD programs are in the directory: `aec/cads-to-compile/cad3`.  We compile the CAD programs to our mesh format (.mesh3 files) and also the industry standard format, STL (.stl files).  The `.mesh3` files will be saved in the `aec/compiled-meshes/mesh3` directory. The `.stl` files will be saved in the `aec/compiled-meshes/stl` directory. 
 
-_Note_: Before running any scripts, feel free to check that both the above directories are empty.
+_Note_: Before running any scripts, feel free to check that the directories `aec/compiled-meshes/mesh3` and `aec/compiled-meshes/stl` are empty since that is where the meshes will be saved.
 
-* To run the compiler, run the following from the `src` directory:
-  `./scripts/compile.sh`. This should take less than a minute to finish.
+* To run the compiler, run the following from the `src` directory: `./scripts/compile.sh`. This should take less than a minute to finish.
 
-* If you want to view the rendered meshes, we recommend the following
-  two approaches:
-
-  - using OpenSCAD which is already installed in this VM. Click on the OpenSCAD icon on the vertical panel on the left and then click on `New`. To view the rendering, type:
+* In order for you to verify that the mesh our compiler generated corresponds to the same CAD program it started with, we recommend viewing the renderings before and after compilation.
+  - To facilitate viewing the rendering before compilation, we provide the directory `aec/cads-to-compile/scad` that contains the CAD programs from our CAD language (`.cad3` files) pretty printed to [OpenSCAD](http://www.openscad.org/)'s language (`.scad` files). OpenSCAD is another programmatic CAD language which has a 3D renderer. We have already installed OpenSCAD in the VM. Simply click on the `scad` files in the directory `aec/cads-to-compile/scad` and click the `Render` button above the Editor (the icon looks like a small cube with an hourglass at the bottom corner). 
+  - To view the rendering after compilation, we again recommend using OpenSCAD: click on the OpenSCAD icon on the vertical panel on the left and then click on `New`. To render an `stl` file, type:
     `import("/home/reincarnate/reincarnate/src/aec/compiled-meshes/stl/example-name.stl");`
-    Then click on the `Render` button on top and view the rendering!
-
-  - using the online STL viewer: www.viewstl.com. Note that this website also only works on STL files. You can upload the stl files generated by our compiler and see how they look.
+    Then click on the `Render` button on top and compare with the rendering of the corresponding `.scad` file. They should look the same.
 
 ### Synthesis: mesh3 -> cad3
 
@@ -71,13 +67,14 @@ In order to show the working synthesis tool, we provide the case studies we show
 
 _Note_: Before running any scripts, feel free to check that the directories `aec/synthed-cads/cad3` and `aec/synthed-cads/scad` are both empty.
 
-* We recommend first running the script `./scripts/basic-synth.sh` to run the synthesis tool on the 5 programs we showed for the compiler just as a sanity check. This should finish in ~ 7 minutes. This indicates that it is possible to write CAD programs in our CAD language, compile them to mesh using our compiler, and then synthesize CAD programs back from the meshes.
+* We recommend first running the script `./scripts/basic-synth.sh` to run the synthesis tool on the 5 meshes our compiler generated. This is just a sanity check. It should finish in ~ 7 minutes and a successful run indicates that it is possible to write CAD programs in our CAD language, compile them to mesh using our compiler, and then synthesize CAD programs back from the meshes.
+_Note_: for this script to run successfully, you have to first run the `compile.sh` script to generate the meshes.
 
 * To run the case studies in the paper (`Section 6`), run `./scripts/paper-synth.sh`. We recommend letting this script run for over a day because two of the bigger case studies can take longer.
 
-* The synthesized CAD programs will be in the directory `aec/synthed-cads`. Our script will generate both `.cad3` files and `.scad` files in dedicated sub directories within `aec/synthed-cads`. The `.cad3` files correspond to the CAD programs synthesized in our CAD language. The `.scad` files correspond to equivalent CAD programs in the OpenSCAD language. We do this so that you can use the OpenSCAD GUI to view the rendered CAD programs.  Clicking on the files will open them in OpenSCAD from where you can click the `Render` button to view the rendering.
+* The synthesized CAD programs will be in the directory `aec/synthed-cads`. Our script will generate both `.cad3` files and `.scad` files in dedicated sub directories within `aec/synthed-cads`. The `.cad3` files correspond to the CAD programs synthesized in our CAD language. The `.scad` files correspond to equivalent CAD programs in the OpenSCAD language. We do this so that you can use the OpenSCAD GUI to view the rendered CAD programs.  Clicking on the files will open them in OpenSCAD from where you can click the `Render` button to view the rendering. 
 
-* There are several other relatively fast examples we provide for synthesis that you can try to run yourself if you are interested. The meshes for these are in the `aec/extra-synth` directory.  The command you need to run for synthesizing one of these is:
+* There are some other examples we provide for synthesis that you can try to run yourself if you are interested. The meshes for these are in the `aec/extra-synth` directory. The command you need to run for synthesizing one of these is:
 
   ```
    ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt aec/synthed-cads/cad3/example-name.cad3 --glue os-mesh --no-invariants --fuel x
@@ -85,20 +82,19 @@ _Note_: Before running any scripts, feel free to check that the directories `aec
 
   `fuel` is a parameter used by the synthesis algorithm shown in `Figure 18` in `Section 5.1` of the paper. It is used to ensure termination of the algorithm. All these additional examples will work with `--fuel 10`.
 
-  You can further experiment to generate the corresponding `scad` files if youare curious to see the renderings on OpenSCAD. The command for that is:
+  You can further experiment to generate the corresponding `scad` files if you are curious to see the renderings on OpenSCAD. The command for that is:
 
   ```
   ./Main.native --src aec/synthed-cads/cad3/example-name.cad3 --tgt aec/synthed-cads/scad/example-name.scad
   ```
 
-### Overview of the tools and how to use them for further experiments
+### Notes and remarks
 
-As we have explained in `Section 4.2.2` of the paper, the design of our tool is fully functorial. Some advantages of this design decision is being able to parametrize our compiler and synthesis tool over different number systems, and swapping our compiler with other CAD compilers for synthesis (see `Section 4.2.2`). There are several implementations of number systems (see `NumSys.ml`, `MPFRNumSys.ml`, `ExactArith.ml`) which are instantiated in `Main.ml`.  `Glue.ml` contains several configurations (called glues) for using our compiler or an external compiler (e.g. OpenSCAD) for synthesis. It is possible to choose the configuration from the command line. Type `./Main.native -h` to see all the options.
+As we have explained in `Section 4.2.2` of the paper, the design of our tool is fully functorial. This has been extremely helpful in managing complexity as the codebase has grown beyond 20000 lines. Some advantages of this design decision is being able to parametrize our compiler and synthesis tool over different number systems, and swapping our compiler with other CAD compilers for synthesis (see `Section 4.2.2`). There are several implementations of number systems (see `NumSys.ml`, `MPFRNumSys.ml`, `ExactArith.ml`) which are instantiated in `Main.ml`.  `Glue.ml` contains several configurations (called glues) for using our compiler or an external compiler (e.g. OpenSCAD) for synthesis. It is possible to choose the configuration from the command line. Type `./Main.native -h` to see all the options.
 
 For the compiler experiments, we of course use the compiler that we have built.  We also check all the invariants (see `Section 3.2.1` of the paper) to ensure that the meshes our compiler produces are valid.
 
-Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated by the glue `os-mesh`), and also disable our invariant checks in order to avoid rounding errors. As we explained in Section `8.1` of the paper, rounding errors creep in very frequently in CAD compilation and as part of our future work, we have already started to work on ways to fix it. Since these numerical issues are still work in progress, for the purpose of demonstrating our synthesis tool, we leverage the fully functorial design of our tools and plug in the OpenSCAD compiler.
-
+Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated by `--glue os-mesh`), and also disable our invariant checks in order to avoid rounding errors. As we explained in Section `8.1` of the paper, rounding errors creep in very frequently in CAD compilation and as part of our future work, we have already started to work on ways to fix it (e.g. exact arithmetic). Since these numerical issues are still work in progress, for the purpose of demonstrating our synthesis tool, we leverage the fully functorial design of our tools and plug in the OpenSCAD compiler.
 
 ### Setup instructions (for setting up ReIncarnate in a different machine)
 
