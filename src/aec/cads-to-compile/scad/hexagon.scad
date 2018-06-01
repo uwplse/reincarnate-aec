@@ -1,0 +1,1 @@
+scale([0.5, 0.577, 1]) cylinder($fn = 6, center = true);
