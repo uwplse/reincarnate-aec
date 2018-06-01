@@ -15,6 +15,10 @@ MYDIR="$(cd -P "$(dirname "$src")" && pwd)"
 # include reincarnate bash library
 source "$MYDIR/include.sh"
 
+# ensure output dirs exist
+mkdir -p aec/compiled-meshes/mesh3
+mkdir -p aec/compiled-meshes/stl
+
 printf "COMPILER TESTS\n"
 
 echo "unit cube"

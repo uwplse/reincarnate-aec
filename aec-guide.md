@@ -103,15 +103,16 @@ Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated
   $ brew cask install openscad
   $ brew install ocaml opam
 ```
+The version of Ocaml we use is `4.05`.
 
-On Linux without root, you need to install [OpenSCAD](http://www.openscad.org/downloads.html) and build gnuplot from source. Then using [Linuxbrew](http://linuxbrew.sh/):
+On Linux (Ubuntu 18.04) without root, you need to install [OpenSCAD](http://www.openscad.org/downloads.html) and build gnuplot from source. Then using [Linuxbrew](http://linuxbrew.sh/):
 
 ```
   $ brew install autoconf parallel git git-lfs graphviz
   $ brew install ocaml opam
 ```
 
-On Linux with root and `apt`:
+On Linux (Ubuntu 18.04) with root and `apt`:
 ```
   $ apt-get install autoconf parallel git git-lfs graphviz gnuplot openscad
   $ apt-get install ocaml opam
