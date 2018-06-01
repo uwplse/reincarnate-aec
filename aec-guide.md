@@ -93,7 +93,7 @@ As we have explained in `Section 4.2.2` of the paper, the design of our tool is 
 
 For the compiler experiments, we of course use the compiler that we have built.  We also check all the invariants (see `Section 3.2.1` of the paper) to ensure that the meshes our compiler produces are valid.
 
-Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated by `--glue os-mesh`), and also disable our invariant checks in order to avoid rounding errors. As we explained in Section `8.1` of the paper, rounding errors creep in very frequently in CAD compilation and as part of our future work, we have already started to work on ways to fix it (e.g. exact arithmetic). Since these numerical issues are still work in progress, for the purpose of demonstrating our synthesis tool, we leverage the fully functorial design of our tools and plug in the OpenSCAD compiler.
+Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated by the flag `--glue os-mesh`), and also disable our invariant (indicated by the flag `--no-invariants`) checks in order to avoid rounding errors. As we explained in Section `8.1` of the paper, rounding errors creep in very frequently in CAD compilation and as part of our future work, we have already started to work on ways to fix it (e.g. exact arithmetic). Since these numerical issues are still work in progress, for the purpose of demonstrating our synthesis tool, we leverage the fully functorial design of our tools and plug in the OpenSCAD compiler.
 
 ### Setup instructions (for setting up ReIncarnate in a different machine)
 
