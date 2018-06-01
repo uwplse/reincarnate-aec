@@ -46,7 +46,7 @@
 <p>An early prototype of the compiler (<code>Section 4</code>) from the core 3D CAD language (<code>Figure 8</code> in the paper) to mesh. The goal is to show that our compiler is capable of generating valid triangular meshes as we described in the paper. To that end we provide 5 CAD programs which cover all the core CAD language features we described in <code>Figure 8</code> of the paper: 3D primitives, affine transformations, binary operations, and their combinations.</p>
 </li>
 <li>
-<p>An early prototype of the synthesis tool or reverse compiler (<code>Section 5</code>) from 3D mesh to CAD. The goal is to show that the synthesis tool is capable of synthesizing CAD programs from meshes for the three case studies we described in <code>Section 6</code> of the paper. Later in this document, we provide instructions on how to view the 3D renderings of the CAD programs our tool synthesizes. Feel free to compare them with the figures we show in the paper, namely in <code>Figures 3, 20, 21</code> and verify that the renderings match with the figures.</p>
+<p>An early prototype of the synthesis tool or reverse compiler (<code>Section 5</code>) from 3D mesh to CAD. The goal is to show that the synthesis tool is capable of synthesizing CAD programs from meshes for the case studies we described in <code>Section 6</code> of the paper. Later in this document, we provide instructions on how to view the 3D renderings of the CAD programs our tool synthesizes. You can compare them with the figures we show in the paper, namely in <code>Figures 3, 20, 21</code> and verify that the renderings look similar.</p>
 </li>
 </ul>
 <p>This document contains the following parts:</p>
@@ -101,7 +101,7 @@ the VM).</p>
 <p><em>Note</em>: Before running any scripts, feel free to check that the directories <code>aec/compiled-meshes/mesh3</code> and <code>aec/compiled-meshes/stl</code> are empty since that is where the meshes will be saved.</p>
 <ul>
 <li>
-<p>To run the compiler, run the following from the <code>src</code> directory: <code>./scripts/compile.sh</code>. This should take less than a minute to finish.</p>
+<p>To run the compiler, run the following from the <code>src</code> directory: <code>./scripts/compile.sh</code>. This should take 2-3 minutes to finish.</p>
 </li>
 <li>
 <p>In order for you to verify that the mesh our compiler generated corresponds to the same CAD program it started with, we recommend viewing the renderings before and after compilation.</p>
@@ -114,23 +114,23 @@ Then click on the <code>Render</code> button on top and compare with the renderi
 </li>
 </ul>
 <h3>Synthesis: mesh3 -&gt; cad3</h3>
-<p>In order to show the working synthesis tool, we provide the case studies we showed in the paper (<code>Section 6</code>). We also provide some other smaller examples that are faster than the ones in the paper.</p>
+<p>In order to show the working synthesis tool, we provide the case studies we showed in the paper (<code>Section 6</code>).</p>
 <p><em>Note</em>: Before running any scripts, feel free to check that the directories <code>aec/synthed-cads/cad3</code> and <code>aec/synthed-cads/scad</code> are both empty.</p>
 <ul>
 <li>
 <p>We recommend first running the script <code>./scripts/basic-synth.sh</code> to run the synthesis tool on the 5 meshes our compiler generated. This is just a sanity check. It should finish in ~ 7 minutes and a successful run indicates that it is possible to write CAD programs in our CAD language, compile them to mesh using our compiler, and then synthesize CAD programs back from the meshes.</p>
 </li>
 <li>
-<p>To run the case studies in the paper (<code>Section 6</code>), run <code>./scripts/paper-synth.sh</code>. We recommend letting this script run for over a day because two of the bigger case studies can take longer.</p>
+<p>To run the case studies in the paper (<code>Section 6</code>), run <code>./scripts/paper-synth.sh</code>. Please let this script run for 2 hours. <em>Note:</em> for the hexholder, we run a smaller version of it from this script which has fewer holes than the one in <code>Figure 21</code> of the paper. This is because the one in the paper is very big and it sometimes takes over a day to complete. We provide the mesh for the very big one (<code>aec/paper-synth/bighexholder.mesh3</code>) in case you are interested to let it run for a day or two.</p>
 </li>
 <li>
 <p>The synthesized CAD programs will be in the directory <code>aec/synthed-cads</code>. Our script will generate both <code>.cad3</code> files and <code>.scad</code> files in dedicated sub directories within <code>aec/synthed-cads</code>. The <code>.cad3</code> files correspond to the CAD programs synthesized in our CAD language. The <code>.scad</code> files correspond to equivalent CAD programs in the OpenSCAD language. We do this so that you can use the OpenSCAD GUI to view the rendered CAD programs.  Clicking on the files will open them in OpenSCAD from where you can click the <code>Render</code> button to view the rendering.</p>
 </li>
 <li>
-<p>There are some other examples we provide for synthesis that you can try to run yourself if you are interested. The meshes for these are in the <code>aec/extra-synth</code> directory. The command you need to run for synthesizing one of these is:</p>
+<p>There are some other small examples we provide for synthesis that you can try to run yourself if you are interested. The meshes for these are in the <code>aec/extra-synth</code> directory. The command you need to run for synthesizing one of these is:</p>
 <pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span> ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt aec/synthed-cads/cad3/example-name.cad3 --glue os-mesh --no-invariants --fuel x
 </div></div></div></pre>
-<p><code>fuel</code> is a parameter used by the synthesis algorithm shown in <code>Figure 18</code> in <code>Section 5.1</code> of the paper. It is used to ensure termination of the algorithm. All these additional examples will work with <code>--fuel 10</code>.</p>
+<p><code>fuel</code> is a parameter used by the synthesis algorithm shown in <code>Figure 18</code> in <code>Section 5.1</code> of the paper. It is used to ensure termination of the algorithm. You can set it to <code>--fuel 100</code>. We explain the flags <code>--glue os-mesh</code> and <code>--no-invariants</code> in the next section.</p>
 <p>You can further experiment to generate the corresponding <code>scad</code> files if you are curious to see the renderings on OpenSCAD. The command for that is:</p>
 <pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>./Main.native --src aec/synthed-cads/cad3/example-name.cad3 --tgt aec/synthed-cads/scad/example-name.scad
 </div></div></div></pre>

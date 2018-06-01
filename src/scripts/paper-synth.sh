@@ -57,8 +57,8 @@ echo "Candle holder"
 printf "${PASS}\n\n"
 
 echo "Hexholder"
-./Main.native --src aec/paper-synth/bighexholder.mesh3 --tgt aec/synthed-cads/cad3/bighexholder.cad3 --no-invariants --glue os-mesh --fuel 30
-./Main.native --src aec/synthed-cads/cad3/bighexholder.cad3 --tgt aec/synthed-cads/scad/bighexholder.scad
+./Main.native --src aec/paper-synth/hexholder.mesh3 --tgt aec/synthed-cads/cad3/hexholder.cad3 --no-invariants --glue os-mesh --fuel 30
+./Main.native --src aec/synthed-cads/cad3/hexholder.cad3 --tgt aec/synthed-cads/scad/hexholder.scad
 printf "${PASS}\n\n"
 
 printf "ALL DONE\n"
