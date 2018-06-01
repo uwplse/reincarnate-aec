@@ -1,0 +1,183 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- common.css -->
+      <style>* {-webkit-tap-highlight-color: rgba(0,0,0,0);}html {-webkit-text-size-adjust: none;}body {font-family: -apple-system, Helvetica, Arial, sans-serif;margin: 0;padding: 20px;color: #333;word-wrap: break-word;}h1, h2, h3, h4, h5, h6 {line-height: 1.1;}img {max-width: 100% !important;height: auto;}blockquote {margin: 0;padding: 0 15px;color: #777;border-left: 4px solid #ddd;}hr {background-color: #ddd;border: 0;height: 1px;margin: 15px 0;}code {font-family: Menlo, Consolas, 'Ubuntu Mono', Monaco, 'source-code-pro', monospace;line-height: 1.4;margin: 0;padding: 0.2em 0;font-size: 90%;background-color: rgba(0,0,0,0.04);border-radius: 3px;}pre > code {margin: 0;padding: 0;font-size: 100%;word-break: normal;background: transparent;border: 0;}ol {list-style-type: decimal;}ol ol, ul ol {list-style-type: lower-latin;}ol ol ol, ul ol ol, ul ul ol, ol ul ol {list-style-type: lower-roman;}table {border-spacing: 0;border-collapse: collapse;margin-top: 0;margin-bottom: 16px;}table th {font-weight: bold;}table th, table td {padding: 6px 13px;border: 1px solid #ddd;}table tr {border-top: 1px solid #ccc;}table tr:nth-child(even) {background-color: #f8f8f8;}input[type="checkbox"] {cursor: default;margin-right: 0.5em;font-size: 13px;}.task-list-item {list-style-type: none;}.task-list-item+.task-list-item {margin-top: 3px;}.task-list-item input {float: left;margin: 0.3em 1em 0.25em -1.6em;vertical-align: middle;}#tag-field {margin: 8px 2px 10px;}#tag-field .tag {display: inline-block;background: #cadff3;border-radius: 4px;padding: 1px 8px;color: black;font-size: 12px;margin-right: 10px;line-height: 1.4;}</style>
+      <!-- ace-static.css -->
+      <style>.ace_static_highlight {white-space: pre-wrap;}.ace_static_highlight .ace_gutter {width: 2em;text-align: right;padding: 0 3px 0 0;margin-right: 3px;}.ace_static_highlight.ace_show_gutter > .ace_line {padding-left: 2.6em;}.ace_static_highlight .ace_line {position: relative;}.ace_static_highlight .ace_gutter-cell {-moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;user-select: none;top: 0;bottom: 0;left: 0;position: absolute;}.ace_static_highlight .ace_gutter-cell:before {content: counter(ace_line, decimal);counter-increment: ace_line;}.ace_static_highlight {counter-reset: ace_line;}</style>
+      <style>.ace-chrome .ace_gutter {background: #ebebeb;color: #333;overflow : hidden;}.ace-chrome .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-chrome {background-color: #FFFFFF;color: black;}.ace-chrome .ace_cursor {color: black;}.ace-chrome .ace_invisible {color: rgb(191, 191, 191);}.ace-chrome .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-chrome .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-chrome .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-chrome .ace_invalid {background-color: rgb(153, 0, 0);color: white;}.ace-chrome .ace_fold {}.ace-chrome .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-chrome .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-chrome .ace_support.ace_type,.ace-chrome .ace_support.ace_class.ace-chrome .ace_support.ace_other {color: rgb(109, 121, 222);}.ace-chrome .ace_variable.ace_parameter {font-style:italic;color:#FD971F;}.ace-chrome .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-chrome .ace_comment {color: #236e24;}.ace-chrome .ace_comment.ace_doc {color: #236e24;}.ace-chrome .ace_comment.ace_doc.ace_tag {color: #236e24;}.ace-chrome .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-chrome .ace_variable {color: rgb(49, 132, 149);}.ace-chrome .ace_xml-pe {color: rgb(104, 104, 91);}.ace-chrome .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-chrome .ace_heading {color: rgb(12, 7, 255);}.ace-chrome .ace_list {color:rgb(185, 6, 144);}.ace-chrome .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-chrome .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-chrome .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-chrome .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-chrome .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-chrome .ace_gutter-active-line {background-color : #dcdcdc;}.ace-chrome .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-chrome .ace_storage,.ace-chrome .ace_keyword,.ace-chrome .ace_meta.ace_tag {color: rgb(147, 15, 128);}.ace-chrome .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-chrome .ace_string {color: #1A1AA6;}.ace-chrome .ace_entity.ace_other.ace_attribute-name {color: #994409;}.ace-chrome .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}</style>
+      <!-- export.css -->
+      <style>
+        body{margin:0 auto;max-width:800px;line-height:1.4}
+        #nav{margin:5px 0 10px;font-size:15px}
+        #titlearea{border-bottom:1px solid #ccc;font-size:17px;padding:10px 0;}
+        #contentarea{font-size:15px;margin:16px 0}
+        .cell{outline:0;min-height:20px;margin:5px 0;padding:5px 0;}
+        .code-cell{font-family:Menlo,Consolas,'Ubuntu Mono',Monaco,'source-code-pro',monospace;font-size:12px;}
+        .latex-cell{white-space:pre-wrap;}
+      </style>
+      <!-- User CSS -->
+      <style> .text-cell {font-size: 15px;}.code-cell {font-size: 12px;}.markdown-cell {font-size: 15px;}.latex-cell {font-size: 15px;}</style>
+    </head>
+    <body>
+      
+      <div id="titlearea">
+        <h2>ReIncarnate Artifact, ICFP 2018</h2>
+      </div>
+      <div id="contentarea"><div class="cell markdown-cell"><h2>Goals of the artifact</h2>
+<p>In our paper, we made the following contributions (<code>Section 1</code>, last paragraph):</p>
+<ol>
+<li>
+<p>A purely functional programming language model for 3D CAD along with denotational semantics for both CAD and triangular mesh.</p>
+</li>
+<li>
+<p>A meaning preserving compilation algorithm from 3D CAD to mesh along with a proof sketch for compiler correctness.</p>
+</li>
+<li>
+<p>A synthesis algorithm that can reverse engineer 3D CAD programs from meshes.</p>
+</li>
+</ol>
+<p>In support of these contributions, this artifact will demonstrate:</p>
+<ul>
+<li>
+<p>An early prototype of the compiler (<code>Section 4</code>) from the core 3D CAD language (<code>Figure 8</code> in the paper) to mesh. The goal is to show that our compiler is capable of generating valid triangular meshes as we described in the paper. To that end we provide 5 CAD programs which cover all the core CAD language features we described in <code>Figure 8</code> of the paper: 3D primitives, affine transformations, binary operations, and their combinations.</p>
+</li>
+<li>
+<p>An early prototype of the synthesis tool or reverse compiler (<code>Section 5</code>) from 3D mesh to CAD. The goal is to show that the synthesis tool is capable of synthesizing CAD programs from meshes for the three case studies we described in <code>Section 6</code> of the paper. Later in this document, we provide instructions on how to view the 3D renderings of the CAD programs our tool synthesizes. Feel free to compare them with the figures we show in the paper, namely in <code>Figures 3, 20, 21</code> and verify that the renderings match with the figures.</p>
+</li>
+</ul>
+<p>This document contains the following parts:</p>
+<ul>
+<li>
+<p>System requirements</p>
+</li>
+<li>
+<p>Getting started.</p>
+</li>
+<li>
+<p>How to run the compiler and synthesis tool.</p>
+</li>
+<li>
+<p>Some notes and remarks</p>
+</li>
+<li>
+<p>How to set up ReIncarnate on a different machine (this is also how we set up<br>
+the VM).</p>
+</li>
+</ul>
+<h2>System requirements</h2>
+<ul>
+<li>
+<p>We provide the artifact as a virtual machine image. To open it you need virtual box version <code>5.2.12</code>, which can be downloaded <a href="https://www.virtualbox.org/wiki/Downloads">here</a>.</p>
+</li>
+<li>
+<p>In the machine where we tested the VM, we have 16 GB RAM and 500 GB hard disk.</p>
+</li>
+</ul>
+<h2>Getting started</h2>
+<ul>
+<li>
+<p>Please download the <code>.ova</code> file from the link and open it with Virtual Box by going to <code>File -&gt; import appliance</code> and giving the path to the <code>.ova</code> file and clicking on <code>continue</code>. In the next window that pops up, click on <code>Import</code>. It should take a few minutes to import.</p>
+</li>
+<li>
+<p>Next, please open the virtual machine image in virtual box by clicking on the green <code>Start</code> button.</p>
+</li>
+<li>
+<p>Login is automatic, but in case needed, the password is: <code>icfp2018</code>.</p>
+</li>
+<li>
+<p>The terminal should be open at startup. The project repository is already cloned.  Navigate to the <code>reincarnate</code> directory.  All the required packages are already installed.</p>
+</li>
+<li>
+<p>Type <code>cd src</code> from the <code>reincarnate</code> directory and then type <code>make</code>. This will build all the tools.</p>
+</li>
+</ul>
+<h2>Running the tools</h2>
+<h3>Compiler: cad3 -&gt; mesh3</h3>
+<p>We provide 5 CAD programs and a script that compiles them using our CAD compiler to generate 3D meshes.  These CAD programs are in the directory: <code>aec/cads-to-compile/cad3</code>.  We compile the CAD programs to our mesh format (.mesh3 files) and also the industry standard format, STL (.stl files).  The <code>.mesh3</code> files will be saved in the <code>aec/compiled-meshes/mesh3</code> directory. The <code>.stl</code> files will be saved in the <code>aec/compiled-meshes/stl</code> directory.</p>
+<p><em>Note</em>: Before running any scripts, feel free to check that the directories <code>aec/compiled-meshes/mesh3</code> and <code>aec/compiled-meshes/stl</code> are empty since that is where the meshes will be saved.</p>
+<ul>
+<li>
+<p>To run the compiler, run the following from the <code>src</code> directory: <code>./scripts/compile.sh</code>. This should take less than a minute to finish.</p>
+</li>
+<li>
+<p>In order for you to verify that the mesh our compiler generated corresponds to the same CAD program it started with, we recommend viewing the renderings before and after compilation.</p>
+<ul>
+<li>To facilitate viewing the rendering before compilation, we provide the directory <code>aec/cads-to-compile/scad</code> that contains the CAD programs from our CAD language (<code>.cad3</code> files) pretty printed to <a href="http://www.openscad.org/">OpenSCAD</a>'s language (<code>.scad</code> files). OpenSCAD is another programmatic CAD language which has a 3D renderer. We have already installed OpenSCAD in the VM. Simply click on the <code>scad</code> files in the directory <code>aec/cads-to-compile/scad</code> and click the <code>Render</code> button above the Editor (the icon looks like a small cube with an hourglass at the bottom corner).</li>
+<li>To view the rendering after compilation, we again recommend using OpenSCAD: click on the OpenSCAD icon on the vertical panel on the left and then click on <code>New</code>. To render an <code>stl</code> file, type:<br>
+<code>import("/home/reincarnate/reincarnate/src/aec/compiled-meshes/stl/example-name.stl");</code><br>
+Then click on the <code>Render</code> button on top and compare with the rendering of the corresponding <code>.scad</code> file. They should look the same.</li>
+</ul>
+</li>
+</ul>
+<h3>Synthesis: mesh3 -&gt; cad3</h3>
+<p>In order to show the working synthesis tool, we provide the case studies we showed in the paper (<code>Section 6</code>). We also provide some other smaller examples that are faster than the ones in the paper.</p>
+<p><em>Note</em>: Before running any scripts, feel free to check that the directories <code>aec/synthed-cads/cad3</code> and <code>aec/synthed-cads/scad</code> are both empty.</p>
+<ul>
+<li>
+<p>We recommend first running the script <code>./scripts/basic-synth.sh</code> to run the synthesis tool on the 5 meshes our compiler generated. This is just a sanity check. It should finish in ~ 7 minutes and a successful run indicates that it is possible to write CAD programs in our CAD language, compile them to mesh using our compiler, and then synthesize CAD programs back from the meshes.<br>
+<em>Note</em>: for this script to run successfully, you have to first run the <code>compile.sh</code> script to generate the meshes.</p>
+</li>
+<li>
+<p>To run the case studies in the paper (<code>Section 6</code>), run <code>./scripts/paper-synth.sh</code>. We recommend letting this script run for over a day because two of the bigger case studies can take longer.</p>
+</li>
+<li>
+<p>The synthesized CAD programs will be in the directory <code>aec/synthed-cads</code>. Our script will generate both <code>.cad3</code> files and <code>.scad</code> files in dedicated sub directories within <code>aec/synthed-cads</code>. The <code>.cad3</code> files correspond to the CAD programs synthesized in our CAD language. The <code>.scad</code> files correspond to equivalent CAD programs in the OpenSCAD language. We do this so that you can use the OpenSCAD GUI to view the rendered CAD programs.  Clicking on the files will open them in OpenSCAD from where you can click the <code>Render</code> button to view the rendering.</p>
+</li>
+<li>
+<p>There are some other examples we provide for synthesis that you can try to run yourself if you are interested. The meshes for these are in the <code>aec/extra-synth</code> directory. The command you need to run for synthesizing one of these is:</p>
+<pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span> ./Main.native --src aec/extra-synth/example-name.mesh3 --tgt aec/synthed-cads/cad3/example-name.cad3 --glue os-mesh --no-invariants --fuel x
+</div></div></div></pre>
+<p><code>fuel</code> is a parameter used by the synthesis algorithm shown in <code>Figure 18</code> in <code>Section 5.1</code> of the paper. It is used to ensure termination of the algorithm. All these additional examples will work with <code>--fuel 10</code>.</p>
+<p>You can further experiment to generate the corresponding <code>scad</code> files if you are curious to see the renderings on OpenSCAD. The command for that is:</p>
+<pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>./Main.native --src aec/synthed-cads/cad3/example-name.cad3 --tgt aec/synthed-cads/scad/example-name.scad
+</div></div></div></pre>
+</li>
+</ul>
+<h3>Notes and remarks</h3>
+<p>As we have explained in <code>Section 4.2.2</code> of the paper, the design of our tool is fully functorial. This has been extremely helpful in managing complexity as the codebase has grown beyond 20000 lines. Some advantages of this design decision is being able to parametrize our compiler and synthesis tool over different number systems, and swapping our compiler with other CAD compilers for synthesis (see <code>Section 4.2.2</code>). There are several implementations of number systems (see <code>NumSys.ml</code>, <code>MPFRNumSys.ml</code>, <code>ExactArith.ml</code>) which are instantiated in <code>Main.ml</code>.  <code>Glue.ml</code> contains several configurations (called glues) for using our compiler or an external compiler (e.g. OpenSCAD) for synthesis. It is possible to choose the configuration from the command line. Type <code>./Main.native -h</code> to see all the options.</p>
+<p>For the compiler experiments, we of course use the compiler that we have built.  We also check all the invariants (see <code>Section 3.2.1</code> of the paper) to ensure that the meshes our compiler produces are valid.</p>
+<p>Currently for the synthesis experiments, we use the OpenSCAD compiler (indicated by <code>--glue os-mesh</code>), and also disable our invariant checks in order to avoid rounding errors. As we explained in Section <code>8.1</code> of the paper, rounding errors creep in very frequently in CAD compilation and as part of our future work, we have already started to work on ways to fix it (e.g. exact arithmetic). Since these numerical issues are still work in progress, for the purpose of demonstrating our synthesis tool, we leverage the fully functorial design of our tools and plug in the OpenSCAD compiler.</p>
+<h3>Setup instructions (for setting up ReIncarnate in a different machine)</h3>
+<ol>
+<li>Install system dependencies. On macOS with <a href="https://brew.sh/">Homebrew</a>:</li>
+</ol>
+<pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ brew install coreutils autoconf gnu-time gawk parallel git git-lfs graphviz gnuplot
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ brew cask install openscad
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ brew install ocaml opam
+</div></div></div></pre>
+<p>On Linux without root, you need to install <a href="http://www.openscad.org/downloads.html">OpenSCAD</a> and build gnuplot from source. Then using <a href="http://linuxbrew.sh/">Linuxbrew</a>:</p>
+<pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ brew install autoconf parallel git git-lfs graphviz
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ brew install ocaml opam
+</div></div></div></pre>
+<p>On Linux with root and <code>apt</code>:</p>
+<pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ apt-get install autoconf parallel git git-lfs graphviz gnuplot openscad
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ apt-get install ocaml opam
+</div></div></div></pre>
+<ol start="2">
+<li>Install <a href="https://opam.ocaml.org/">opam</a> packages:</li>
+</ol>
+<pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ opam init
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ eval `opam config env`
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ opam install mlgmpidl zarith hashcons menhir js_of_ocaml
+</div></div></div></pre>
+<ol start="3">
+<li>Run GNU parallel once interactively and acknowledge that you will cite the authors:</li>
+</ol>
+<pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ parallel --citation
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>
+</div></div></div></pre>
+<ol start="4">
+<li>Build the compiler and synthesis tool:</li>
+</ol>
+<pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ cd reincarnate/src
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  $ make
+</div></div></div></pre>
+</div></div>
+      <script></script>
+    </body>
+    </html>
+  
