@@ -53,15 +53,6 @@ struct
   let pushl q l =
     List.fold_left push q l
 
-  let rec to_list = function
-    | Empty -> []
-    | Node (p, e, l, Empty) ->
-        (to_list l) @ [(p, e)]
-    | Node (p, e, Empty, r) ->
-        [(p, e)] @ (to_list r)
-    | Node (p, e, l, r) ->
-        (to_list l) @ [(p, e)] @ (to_list r)
-
   let is_empty q =
     match q with
     | Empty -> true
@@ -91,5 +82,25 @@ struct
         None
     | Node (p, e, _, _) as q ->
         Some (p, e, remove_top q)
+
+  let to_list q =
+    let rec loop q acc =
+      match pop q with
+      | None -> List.rev acc
+      | Some (p, e, q') -> loop q' ((p, e) :: acc)
+    in
+    loop q []
+
+  (*
+  let rec to_list = function
+    | Empty -> []
+    | Node (p, e, l, Empty) ->
+        (to_list l) @ [(p, e)]
+    | Node (p, e, Empty, r) ->
+        [(p, e)] @ (to_list r)
+    | Node (p, e, l, r) ->
+        (to_list l) @ [(p, e)] @ (to_list r)
+  *)
+
 end
 

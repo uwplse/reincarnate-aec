@@ -41,6 +41,8 @@
 #load "SynthBench2Parser.cmo";;
 #load "SynthBench3Parser.cmo";;
 
+#load "RPriorityQueue.cmo";;
+
 #load "TableLexer.cmo";;
 #load "TableParser.cmo";;
 
@@ -59,6 +61,7 @@ open Geom
 open Mesh
 open CAD
 open LambdaCAD
+open RPriorityQueue
 
 module N = FloatNum
 
@@ -78,10 +81,10 @@ module C3 = CAD3(N)(M3)
 
 module LC = LambdaCAD.Make(N)(C1)(C2)(C3)
 
+module Q = PriorityQueue(N)
+
 let time f x =
   let t = Sys.time() in
   let fx = f x in
   Printf.printf "Execution time: %fs\n" (Sys.time() -. t);
   fx
-
-

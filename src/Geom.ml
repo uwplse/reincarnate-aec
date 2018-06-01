@@ -198,6 +198,8 @@ module type GEOM2 = sig
   val isect_ss       : dseg -> dseg -> isect_dseg
   val dseg_circuit   : pt list -> dseg list
 
+  val equiv_dseg_endpoints : dseg -> dseg -> bool
+
   (* partitiong and joining dsegs *)
   val part_dseg  : dseg -> dseg -> dseg list
   val part_dsegs : dseg list -> dseg -> dseg list
@@ -477,6 +479,11 @@ module Geom2 (N : NUM) : (GEOM2 with type num = N.t)
     ; tail = tail
     }
 
+  let rev_dseg s =
+    { head = s.tail
+    ; tail = s.head
+    }
+
   let string_of_dseg s =
     Printf.sprintf "{head = %s; tail = %s}"
       (string_of_pt s.head)
@@ -496,6 +503,10 @@ module Geom2 (N : NUM) : (GEOM2 with type num = N.t)
 
   let equiv_dseg a b =
     cmp_dseg a b = EQ
+
+  let equiv_dseg_endpoints a b =
+    equiv_dseg a b ||
+    equiv_dseg a (rev_dseg b)
 
   let empty_dseg s =
     equiv_pt s.head s.tail
@@ -1116,6 +1127,8 @@ module type RAWGEOM3 = sig
   val lift_ptop_dseg  : (pt -> pt) -> dseg -> dseg
   val isect_ss        : dseg -> dseg -> isect_dseg
 
+  val equiv_dseg_endpoints : dseg -> dseg -> bool
+
   (** lines and rays *)
 
   type line
@@ -1575,6 +1588,11 @@ module RawGeom3
     ; tail = tail
     }
 
+  let rev_dseg s =
+    { head = s.tail
+    ; tail = s.head
+    }
+
   module ThreeJS =
   struct
     let string_of_point (x, y, z) =
@@ -1635,6 +1653,10 @@ module RawGeom3
 
   let equiv_dseg a b =
     cmp_dseg a b = EQ
+
+  let equiv_dseg_endpoints a b =
+    equiv_dseg a b ||
+    equiv_dseg a (rev_dseg b)
 
   let empty_dseg s =
     equiv_pt s.head s.tail

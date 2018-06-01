@@ -662,13 +662,18 @@ module RawSynth3
         let diffs = List.map diff xs in
         List.fold_left (C3.mkbinop C3.Union) C3.Empty diffs
 
+  exception NoSplit
+
   let factor_manifolds m =
     let cs = M3.cycles m in
     if List.length cs = 1 then
+      raise NoSplit
+      (*
       C3.Mesh m
+      *)
     else
-      let t = CTree.mkctree M3.contains cs
-      in union_diff t
+      let t = CTree.mkctree M3.contains cs in
+      union_diff t
 
   let hole_depth c =
     let rec loop = function
@@ -697,7 +702,7 @@ module RawSynth3
     in loop c
 
   let disj_step c =
-    (*print_endline "disjoint step";*)
+    print_endline "disjoint step";
     let rec go = function
       | C3.Empty    -> C3.Empty
       | C3.Unit     -> C3.Unit
@@ -720,12 +725,16 @@ module RawSynth3
            | None,   Some i -> C3.Binop (op, c1, go c2)
            | Some i, None   -> C3.Binop (op, go c1, c2)
            | Some i, Some j ->
-               if i < j
-               then C3.Binop (op, go c1, c2)
-               else C3.Binop (op, c1, go c2)
+               if i < j then
+                 try C3.Binop (op, go c1, c2)
+                 with NoSplit -> C3.Binop (op, c1, go c2)
+               else
+                 try C3.Binop (op, c1, go c2)
+                 with NoSplit -> C3.Binop (op, go c1, c2)
           end
     in
-    go c
+    try [go c]
+    with NoSplit -> []
 
   let splits m =
     match M3.convex_split m with
@@ -1130,8 +1139,7 @@ module RawSynth3
         None
 
   let rec try_recogs recogs m =
-    let vs = List.map (fun x -> uncurry3 G3.mkpt x) (M3.verts m)
-    in
+    let vs = List.map (fun x -> uncurry3 G3.mkpt x) (M3.verts m) in
     let vs_len = N.of_string (string_of_int (List.length vs)) in
     let cent =
       G3.div (List.fold_left G3.add (G3.mkpt N.n0 N.n0 N.n0) vs)
@@ -1160,8 +1168,7 @@ module RawSynth3
               |> C3.mkunop (C3.RotateZ rz)
               |> C3.compile
             in
-            let vs' = List.map (fun x -> uncurry3 G3.mkpt x) (M3.verts m')
-            in
+            let vs' = List.map (fun x -> uncurry3 G3.mkpt x) (M3.verts m') in
             let vs_len' = N.of_string (string_of_int (List.length vs')) in
             let cent' =
               G3.div (List.fold_left G3.add (G3.mkpt N.n0 N.n0 N.n0) vs')
@@ -1192,7 +1199,6 @@ module RawSynth3
   let bound_prim prims m =
     let disjoint m = List.length (M3.cycles m) > 1 in
     if disjoint m then
-      (*(print_endline "disjoint mesh";*)
       C3.Mesh m
     else
       let (cm, t, (rx, ry, rz), s) = canon m in
@@ -1240,7 +1246,6 @@ module RawSynth3
   let canon_prim_meshes = ref []
 
   let sub_step c =
-    (*print_endline "subtractive step";*)
     let rec go = function
       | C3.Empty    -> C3.Empty
       | C3.Unit     -> C3.Unit
@@ -1254,9 +1259,7 @@ module RawSynth3
           else begin
             match try_recogs !canon_prim_meshes m with
             | None ->
-                (*print_endline "finding bounding prim";*)
                 let bb = bound_prim !canon_prim_meshes m in
-                (*print_endline  "bounding primitive found";*)
                 let d  = M3.diff (C3.compile bb) m in
                 C3.mkbinop C3.Diff bb (C3.Mesh d)
             | Some p -> p
@@ -1283,10 +1286,6 @@ module RawSynth3
        |> C3.simplify
 
   let best2 cs =
-    let f = "cads.txt" in
-    List.iter
-      (fun x -> Util.append_file f (C3.to_string x ^ "\n-----------\n\n"))
-      cs;
     cs |> List.map (fun x -> (x, hole_count x))
        |> List.sort
             (fun (c1, h1) (c2, h2) ->
@@ -1301,6 +1300,10 @@ module RawSynth3
        |> C3.simplify
 
   let best4 c cs =
+    let f = "cads.txt" in
+    List.iter
+      (fun x -> Util.append_file f (C3.to_string x ^ "\n-----------\n\n"))
+      cs;
     let vols =
       List.map (fun x ->
         (x, M3.vol (M3.diff (C3.compile x) (C3.compile c)))) cs
@@ -1311,10 +1314,17 @@ module RawSynth3
          |> C3.simplify
 
   let step c =
-   [ disj_step c
-   ; sub_step c
+    match disj_step c with
+    | [] -> [sub_step c]
+    | cs -> cs
+
+  (*
+  let step c =
+   disj_step c @
+   [ sub_step c
 (* ; add_step c*)
    ]
+  *)
 
   let init () =
     let sphere_prim =
@@ -1363,9 +1373,40 @@ module RawSynth3
 
   let synth_c limit c =
     init();
+    let not_done c =
+      hole_count c > 0
+    in
     let none_done wl =
+      wl |> Q.to_list
+         |> List.map (fun (_, (_, c)) -> c)
+         |> List.for_all not_done
+      (*
       let l = Q.to_list wl in
       List.for_all (fun (p, (i, c)) -> hole_count c > 0) l
+      *)
+    in
+    let priority fuel c =
+      let rec loop = function
+        | C3.Empty | C3.Unit | C3.Sphere
+        | C3.Cylinder | C3.Pentagon | C3.Hexagon ->
+            N.of_string "-1e100"
+        | C3.Mesh _ ->
+            N.n1
+        | C3.Unop (_, c') ->
+            N.add N.n1 (loop c')
+        | C3.Binop (_, c1, c2) ->
+            N.add N.n1 (Util.max N.cmp (loop c1) (loop c2))
+      in
+      let score =
+        if hole_count c = 0
+        then N.of_string "1e100"
+        else loop c
+      in
+      (*
+      Printf.eprintf "SCORE = %s at fuel %d for CAD:%s\n\n\n%!"
+        (N.to_string score) fuel (C3.to_string c);*)
+      (* N.n1 *)
+      score
     in
     let rec loop fin wl =
       match Q.pop wl with
@@ -1374,9 +1415,10 @@ module RawSynth3
       | Some (p, (i, c), rest) ->
           if i < limit && none_done wl then
             c |> step
+              (*
               |> Util.dedup C3.cmp
-              |> List.map (pair (i + 1))
-              |> List.map (pair N.n1)
+              *)
+              |> List.map (fun c -> (priority i c, (i + 1, c)))
               |> Q.pushl rest
               |> loop fin
           else
@@ -1386,7 +1428,10 @@ module RawSynth3
       |> pair N.n1
       |> Q.single
       |> loop []
+      (*
       |> best4 c
+      *)
+      |> best2
 
   let synth ps f m =
     prims := ps;

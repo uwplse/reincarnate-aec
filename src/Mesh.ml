@@ -1028,19 +1028,29 @@ module RawMesh3 (N : NUM) (G : GEOM3 with type num = N.t) = struct
     let s3 = G.mkdseg t.G.c t.G.a in
     [s1; s2; s3]
 
+  let dsegs_of_face f =
+    f |> tri_of_face
+      |> dsegs_of_tri
+
   let dsegs_of_faces fs =
-    fs |> List.map tri_of_face
-       |> Util.flatmap dsegs_of_tri
+    Util.flatmap dsegs_of_face fs
 
-  let string_of_pts_triple pts =
-    pts |> Util.triple_map (fun p -> (p.G.x, p.G.y, p.G.z))
+  let str3_of_pt3 pt3 =
+    pt3 |> Util.triple_map (fun p -> (p.G.x, p.G.y, p.G.z))
         |> Util.triple_map string_of_point
-        |> Util.uncurry3 @@ Printf.sprintf "(%s, %s, %s)"
 
-  let string_of_face f =
+  let string_of_pts_triple ?newlines:(newlines = false) pts =
+    if newlines then
+      pts |> str3_of_pt3
+          |> Util.uncurry3 @@ Printf.sprintf "( %s\n, %s\n, %s)"
+    else
+      pts |> str3_of_pt3
+          |> Util.uncurry3 @@ Printf.sprintf "(%s, %s, %s)"
+
+  let string_of_face ?newlines:(newlines = false) f =
     f |> tri_of_face
       |> G.pts_of_tri
-      |> string_of_pts_triple
+      |> string_of_pts_triple ~newlines:newlines
 
   let equiv_face f1 f2 =
     let t1 = tri_of_face f1 in
@@ -1102,29 +1112,32 @@ module RawMesh3 (N : NUM) (G : GEOM3 with type num = N.t) = struct
        |> List.find (Util.uncurry equiv_face)
 
   let find_odd_edge fs =
-    let same_dseg s1 s2 =
-      let (p11, p12) = G.pts_of_dseg s1 in
-      let (p21, p22) = G.pts_of_dseg s2 in
-      (*
-      (G.equiv_pt p11 p21 || G.equiv_pt p11 p22) &&
-      (G.equiv_pt p12 p21 || G.equiv_pt p12 p22)
-      *)
-      (G.equiv_pt p11 p21 && G.equiv_pt p12 p22) ||
-      (G.equiv_pt p11 p22 && G.equiv_pt p12 p21)
-    in
     let is_edge s f =
-      let t = tri_of_face f  in
-      let sab = G.mkdseg t.G.a t.G.b in
-      let sbc = G.mkdseg t.G.b t.G.c in
-      let sca = G.mkdseg t.G.c t.G.a in
-      same_dseg sab s ||
-      same_dseg sbc s ||
-      same_dseg sca s
+      f |> dsegs_of_face
+        |> List.exists (G.equiv_dseg_endpoints s)
     in
     let odd_edge s =
-      fs |> List.filter (is_edge s)
-         |> List.length
-         |> Util.of_parity false true
+      let neighbors =
+        List.filter (is_edge s) fs in
+      let deg =
+        List.length neighbors in
+      if deg mod 2 == 0 then
+        false
+      else begin
+        let nstrs =
+          neighbors
+            |> List.map (string_of_face ~newlines:true)
+            |> String.concat "\n"
+        in
+        log (String.concat "\n"
+          [ "ERROR: find_odd_edge"
+          ; "s ="
+          ; G.string_of_dseg s
+          ; Printf.sprintf "has %d neighbors:" deg
+          ; nstrs
+          ]);
+        true
+      end
     in
     fs |> dsegs_of_faces
        |> List.find odd_edge

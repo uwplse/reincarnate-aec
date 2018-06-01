@@ -27,7 +27,7 @@ This document contains the following parts:
 
 * How to run the compiler and synthesis tool.
 
-* How to use the tools for additional experiments.
+* An overview of the tool and how to use them for additional experiments.
 
 * How to set up ReIncarnate on a different machine (this is also how we set up
   the VM).
@@ -56,6 +56,9 @@ files) and also the industry standard format, STL (.stl files).  The `.mesh3`
 files will be saved in the `aec/compiled-meshes/mesh3` directory. The `.stl`
 files will be saved in the `aec/compiled-meshes/stl` directory.
 
+_Note_: Before running any scripts, feel free to check that both the above
+directories are empty.
+
 * To run the compiler, run the following from the `src` directory:
   `./scripts/compile.sh`. This should take less than a minute to finish.
 
@@ -77,6 +80,9 @@ files will be saved in the `aec/compiled-meshes/stl` directory.
 In order to show the working synthesis tool, we provide the case studies we
 showed in the paper (`Section 6`). We also provide some other smaller
 examples that are faster than the ones in the paper.
+
+_Note_: Before running any scripts, feel free to check that the directories
+`aec/synthed-cads/cad3` and `aec/synthed-cads/scad` are both empty.
 
 * We recommend first running the script `./scripts/basic-synth.sh` to run the
   synthesis tool on the 5 programs we showed for the compiler. This should
@@ -115,7 +121,7 @@ examples that are faster than the ones in the paper.
   ./Main.native --src aec/synthed-cads/cad3/example-name.cad3 --tgt aec/synthed-cads/scad/example-name.scad
   ```
 
-### Details for further experimentation
+### Overview of the tools and how to use them for further experiments
 
 As we have explained in `Section 4.2.2` of the paper, the design of our tool
 is fully functorial. Some advantages of this design decision is being able
@@ -132,6 +138,9 @@ For the compiler experiments, we of course use the compiler that we have
 built.  We also check all the invariants (see `Section 3.2.1` of the paper)
 to ensure that the meshes our compiler produces are valid.
 
+* You can write your own CAD programs in our language and try to compile them:
+  - 
+
 
 Currently for the synthesis experiments, we use the OpenSCAD compiler
 (indicated by the glue `os-mesh`), and also disable our invariant checks in
@@ -143,7 +152,7 @@ demonstrating our synthesis tool, we leverage the fully functorial design of
 our tools and plug in the OpenSCAD compiler.
 
 
-### Setup instructions
+### Setup instructions (for setting up ReIncarnate in a different machine)
 
 1. Install system dependencies. On macOS with [Homebrew](https://brew.sh/):
 ```

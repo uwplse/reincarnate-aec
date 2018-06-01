@@ -17,11 +17,6 @@ source "$MYDIR/include.sh"
 
 printf "SYNTHESIS TESTS FROM THE PAPER\n"
 
-echo "Candle holder"
-./Main.native --src aec/paper-synth/candle.mesh3 --tgt aec/synthed-cads/cad3/candle.cad3 --no-invariants --glue os-mesh
-./Main.native --src aec/synthed-cads/cad3/candle.cad3 --tgt aec/synthed-cads/scad/candle.scad
-printf "${PASS}\n\n"
-
 echo "ICFP-I"
 ./Main.native --src aec/paper-synth/icfp_i.mesh3 --tgt aec/synthed-cads/cad3/icfp_i.cad3 --no-invariants --glue os-mesh
 ./Main.native --src aec/synthed-cads/cad3/icfp_i.cad3 --tgt aec/synthed-cads/scad/icfp_i.scad
@@ -42,15 +37,24 @@ echo "ICFP-P"
 ./Main.native --src aec/synthed-cads/cad3/icfp_p.cad3 --tgt aec/synthed-cads/scad/icfp_p.scad
 printf "${PASS}\n\n"
 
+echo "ICFP"
+./Main.native --src aec/paper-synth/icfp.mesh3 --tgt aec/synthed-cads/cad3/icfp.cad3 --no-invariants --glue os-mesh --fuel 15
+./Main.native --src aec/synthed-cads/cad3/icfp.cad3 --tgt aec/synthed-cads/scad/icfp.scad
+printf "${PASS}\n\n"
+
 echo "CFP"
 ./Main.native --src aec/paper-synth/cfp.mesh3 --tgt aec/synthed-cads/cad3/cfp.cad3 --no-invariants --glue os-mesh --fuel 10
 ./Main.native --src aec/synthed-cads/cad3/cfp.cad3 --tgt aec/synthed-cads/scad/cfp.scad
 printf "${PASS}\n\n"
 
-echo "Hexholder"
-./Main.native --src aec/paper-synth/hexholder.mesh3 --tgt aec/synthed-cads/cad3/hexholder.cad3 --no-invariants --glue os-mesh --fuel 12
-./Main.native --src aec/synthed-cads/cad3/hexholder.cad3 --tgt aec/synthed-cads/scad/hexholder.scad
+echo "Candle holder"
+./Main.native --src aec/paper-synth/candle.mesh3 --tgt aec/synthed-cads/cad3/candle.cad3 --no-invariants --glue os-mesh
+./Main.native --src aec/synthed-cads/cad3/candle.cad3 --tgt aec/synthed-cads/scad/candle.scad
 printf "${PASS}\n\n"
 
+echo "Hexholder"
+./Main.native --src aec/paper-synth/bighexholder.mesh3 --tgt aec/synthed-cads/cad3/bighexholder.cad3 --no-invariants --glue os-mesh --fuel 30
+./Main.native --src aec/synthed-cads/cad3/bighexholder.cad3 --tgt aec/synthed-cads/scad/bighexholder.scad
+printf "${PASS}\n\n"
 
 printf "ALL DONE\n"
