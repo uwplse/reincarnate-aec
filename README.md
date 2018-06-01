@@ -68,7 +68,6 @@ In order to show the working synthesis tool, we provide the case studies we show
 _Note_: Before running any scripts, feel free to check that the directories `aec/synthed-cads/cad3` and `aec/synthed-cads/scad` are both empty.
 
 * We recommend first running the script `./scripts/basic-synth.sh` to run the synthesis tool on the 5 meshes our compiler generated. This is just a sanity check. It should finish in ~ 7 minutes and a successful run indicates that it is possible to write CAD programs in our CAD language, compile them to mesh using our compiler, and then synthesize CAD programs back from the meshes.
-_Note_: for this script to run successfully, you have to first run the `compile.sh` script to generate the meshes.
 
 * To run the case studies in the paper (`Section 6`), run `./scripts/paper-synth.sh`. We recommend letting this script run for over a day because two of the bigger case studies can take longer.
 
