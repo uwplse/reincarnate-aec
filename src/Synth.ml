@@ -702,7 +702,6 @@ module RawSynth3
     in loop c
 
   let disj_step c =
-    print_endline "disjoint step";
     let rec go = function
       | C3.Empty    -> C3.Empty
       | C3.Unit     -> C3.Unit
