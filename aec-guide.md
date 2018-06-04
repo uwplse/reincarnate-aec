@@ -82,7 +82,7 @@ _Note_: Before running any scripts, feel free to check that the directories `aec
   ```
   ./Main.native --src aec/synthed-cads/cad3/bighexholder.cad3 --tgt aec/synthed-cads/scad/bighexholder.scad
   ```
-If you just want to look at the code our tool synthesized for this big example, we have included them in the directories: `aec/pre-run-big-hexholder/cad3/bighexholder.cad3` and `aec/pre-run-big-hexholder/scad/bighexholder.scad` (to open in OpenSCAD anc view).
+If you just want to look at the code our tool synthesized for this big example, we have included them in the directories: `aec/pre-run-big-hexholder/cad3/bighexholder.cad3` and `aec/pre-run-big-hexholder/scad/bighexholder.scad` (to open in OpenSCAD and view).
 
 * All the synthesized CAD programs will be in the directory `aec/synthed-cads`. Our script will generate both `.cad3` files and `.scad` files in dedicated sub directories within `aec/synthed-cads`. The `.cad3` files correspond to the CAD programs synthesized in our CAD language. The `.scad` files correspond to equivalent CAD programs in the OpenSCAD language. We do this so that you can use the OpenSCAD GUI to view the rendered CAD programs.  Clicking on the files will open them in OpenSCAD from where you can click the `Render` button to view the rendering. 
 
