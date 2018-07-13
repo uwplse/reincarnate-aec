@@ -1152,18 +1152,18 @@ module RawCAD3
         else
           Unop (op, sc)
     | Binop (op, cA, cB) ->
-        if m = compile Empty then
-          Empty
+        let sA = simplify cA in
+        let sB = simplify cB in
+        if compile (Binop (Diff, sA, c)) = M.mesh []
+        && compile (Binop (Diff, c, sA)) = M.mesh []
+        then
+          sA
         else
-          let sA = simplify cA in
-          let sB = simplify cB in
-          if M.equiv m (compile sA) then
-            sA
-          else
-          if M.equiv m (compile sB) then
-            sB
-          else
-            Binop (op, sA, sB)
+        if compile (Binop (Diff, sB, c)) = M.mesh []
+        && compile (Binop (Diff, c, sB)) = M.mesh [] then
+          sB
+        else
+          Binop (op, sA, sB)
 
 (* TODO: add other primitives *)
   let rec rand n =
