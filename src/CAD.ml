@@ -1049,6 +1049,10 @@ module RawCAD3
 
   (** 3D CAD compiler calling mesh functions *)
   let compile c =
+    Printf.printf "Number of nodes in the AST: %d\n" (size c);
+    Printf.printf "Height of the AST: %d\n" (height c);
+    Printf.printf "Number of primitives: %d\n" (num_prims c);
+    flush stdout;
     let rec loop d c =
       logd "compile" d (summary_string c);
       begin match c with
