@@ -38,7 +38,7 @@ This document contains the following parts:
 
 ## Getting started
 
-* Please download the `.ova` file from the link and open it with Virtual Box by going to `File -> import appliance` and giving the path to the `.ova` file and clicking on `continue`. In the next window that pops up, click on `Import`. It should take a few minutes to import.
+* Please download the `.ova` file from this [link](https://drive.google.com/drive/folders/1aZIzL6ecCpOTF0jRpz7UUA9bD4hjoSbd?usp=sharing) and open it with Virtual Box by going to `File -> import appliance` and giving the path to the `.ova` file and clicking on `continue`. In the next window that pops up, click on `Import`. It should take a few minutes to import.
 
 * Next, please open the virtual machine image in virtual box by clicking on the green `Start` button.
 
